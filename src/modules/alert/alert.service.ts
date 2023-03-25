@@ -10,6 +10,7 @@ import { PolicyTarget } from '../escalation-policy/entities/policy-target.entity
 import { EscalationPolicyService } from '../escalation-policy/escalation-policy.service';
 import { MailService } from '../mail/mail.service';
 import { PagerService } from '../pager/pager.service';
+import { TwilioSmsService } from '../twilio-sms/twilio-sms.service';
 import { CreateAlertDto } from './dto/create-alert.dto';
 import { UpdateAlertDto } from './dto/update-alert.dto';
 
@@ -19,6 +20,7 @@ export class AlertService {
     private pagerService: PagerService,
     private escalationPolicyService: EscalationPolicyService,
     private mailService: MailService,
+    private twilioSmsService: TwilioSmsService,
     private utilsService: UtilsService,
   ) {}
 
@@ -64,19 +66,24 @@ export class AlertService {
       usersGroupByAlertType?.email.length !== 0 &&
       usersGroupByAlertType?.SMS.length !== 0
     ) {
+      await Promise.all([
+        // this.mailService.sendEmailToTargetUsers(
+        //   name,
+        //   message,
+        //   usersGroupByAlertType?.email,
+        // ),
+        this.twilioSmsService.sendEmailToTargetUsers(message, usersGroupByAlertType?.SMS)
+      ]);
+      return;
+    } else if (usersGroupByAlertType?.email.length !== 0) {
       await this.mailService.sendEmailToTargetUsers(
         name,
         message,
         usersGroupByAlertType?.email,
       );
       return;
-    } else if (usersGroupByAlertType?.email.length !== 0) {
-      console.log(usersGroupByAlertType?.email);
-      console.log(usersGroupByAlertType?.email.length);
-      return;
     } else if (usersGroupByAlertType?.SMS.length !== 0) {
-      console.log(usersGroupByAlertType?.SMS);
-      console.log(usersGroupByAlertType?.SMS.length);
+      await this.twilioSmsService.sendEmailToTargetUsers(message, usersGroupByAlertType?.SMS);
       return;
     }
 

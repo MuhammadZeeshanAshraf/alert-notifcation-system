@@ -9,11 +9,20 @@ import { EscalationPolicyModule } from './modules/escalation-policy/escalation-p
 import { PAGER_DATABASE_CONNECTION } from './common/contants';
 import { UtilsModule } from './common/utils/UtilsModule';
 import { MailModule } from './modules/mail/mail.module';
+import { TwilioModule } from 'nestjs-twilio';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    TwilioModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        accountSid: configService.get('TWILIO_ACCOUNT_SID'),
+        authToken: configService.get('TWILIO_AUTH_TOKEN'),
+      }),
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
@@ -57,7 +66,7 @@ import { MailModule } from './modules/mail/mail.module';
     PagerModule,
     EscalationPolicyModule,
     UtilsModule,
-    MailModule    
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
