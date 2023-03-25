@@ -19,7 +19,7 @@ export class PagerService {
   }
 
   findAll() {
-    return `This action returns all pager`;
+    return this.monitoredServiceRepository.find();
   }
 
   findOne(id: number) {
