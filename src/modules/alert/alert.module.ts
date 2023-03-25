@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PAGER_DATABASE_CONNECTION } from 'src/common/contants';
 import { escalationPolicyModuleDependeniceEntities, escalationPolicyModuleDependeniceRepository } from '../escalation-policy/escalation-policy.module';
 import { EscalationPolicyService } from '../escalation-policy/escalation-policy.service';
+import { MailModule } from '../mail/mail.module';
+import { MailService } from '../mail/mail.service';
 import { pagerModuleDependeniceEntities, pagerModuleDependeniceRepository } from '../pager/pager.module';
 import { PagerService } from '../pager/pager.service';
 import { AlertController } from './alert.controller';
@@ -20,6 +23,7 @@ import { AlertService } from './alert.service';
     AlertService,
     PagerService,
     EscalationPolicyService,
+    MailService,
     ...escalationPolicyModuleDependeniceRepository,
     ...pagerModuleDependeniceRepository,
   ],

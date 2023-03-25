@@ -8,6 +8,7 @@ import { PagerModule } from './modules/pager/pager.module';
 import { EscalationPolicyModule } from './modules/escalation-policy/escalation-policy.module';
 import { PAGER_DATABASE_CONNECTION } from './common/contants';
 import { UtilsModule } from './common/utils/UtilsModule';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -55,7 +56,8 @@ import { UtilsModule } from './common/utils/UtilsModule';
     AlertModule,
     PagerModule,
     EscalationPolicyModule,
-    UtilsModule,    
+    UtilsModule,
+    MailModule    
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -27,7 +27,7 @@ export class InternalServerExceptionFilter implements ExceptionFilter {
 
         console.log(request.url);
         console.log(exception.constructor);
-        console.log(exception);
+        console.log(JSON.stringify(exception, null , 4) );
 
         switch (exception.constructor) {
             case BadRequestException:
