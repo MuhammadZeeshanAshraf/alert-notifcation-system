@@ -5,6 +5,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { AlertAcknowledgment } from "./alert-acknowledgment.entity";
 import { PolicyTarget as PolicyTarget } from "./policy-target.entity";
 
 @Index("unique_email", ["email"], { unique: true })
@@ -30,4 +31,7 @@ export class User {
 
   @OneToMany(() => PolicyTarget, (policyTargets) => policyTargets.user)
   policyTargets: PolicyTarget[];
+
+  @OneToMany(() => AlertAcknowledgment, (alertAcknowledgment) => alertAcknowledgment.acknowledgedBy)
+  alertAcknowledgment: AlertAcknowledgment[];
 }

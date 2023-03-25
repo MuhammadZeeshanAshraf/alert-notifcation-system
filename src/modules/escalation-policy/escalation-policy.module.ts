@@ -11,6 +11,7 @@ import { User } from './entities/user.entity';
 import { MonitoredService } from './entities/monitored-service.entity';
 import { PolicyTargetGroup } from './entities/policy-target-group.entity';
 import { PolicyTarget } from './entities/policy-target.entity';
+import { AlertAcknowledgment } from './entities/alert-acknowledgment.entity';
 
 export const escalationPolicyModuleDependeniceRepository = [
   {
@@ -37,6 +38,7 @@ export const escalationPolicyModuleDependeniceEntities = [
   User,
   PolicyTargetGroup,
   PolicyTarget,
+  AlertAcknowledgment
 ];
 
 @Module({

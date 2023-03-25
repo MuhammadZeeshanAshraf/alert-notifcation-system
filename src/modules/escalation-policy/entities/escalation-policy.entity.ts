@@ -7,6 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { AlertAcknowledgment } from './alert-acknowledgment.entity';
 import { MonitoredService } from './monitored-service.entity';
 import { PolicyTargetGroup } from './policy-target-group.entity';
 
@@ -54,4 +55,7 @@ export class EscalationPolicy {
     (policyTargetGroup) => policyTargetGroup.policy,
   )
   policyTargetGroups: PolicyTargetGroup[];
+
+  @OneToMany(() => AlertAcknowledgment, (alertAcknowledgment) => alertAcknowledgment.alert)
+  alertAcknowledgment: AlertAcknowledgment[];
 }
