@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { RESPONSE_MESSAGE, RESPONSE_STATUS } from 'src/common/contants';
+import {
+  RESPONSE_MESSAGE,
+  RESPONSE_STATUS,
+  USER_GROUP_BY_ALERT_TYPE_KEY,
+} from 'src/common/contants';
+import { GroupTypeInterface } from 'src/common/interfaces/group-by.interface';
 import { UtilsService } from 'src/common/utils/UtilsService';
+import { PolicyTarget } from '../escalation-policy/entities/policy-target.entity';
 import { EscalationPolicyService } from '../escalation-policy/escalation-policy.service';
 import { PagerService } from '../pager/pager.service';
 import { CreateAlertDto } from './dto/create-alert.dto';
@@ -15,6 +21,7 @@ export class AlertService {
   ) {}
 
   async create(createAlertDto: CreateAlertDto) {
+    console.log(createAlertDto);
     const { serviceId } = createAlertDto;
     const monitoredService = await this.pagerService.findOne(serviceId);
     if (monitoredService === null) {
@@ -28,11 +35,28 @@ export class AlertService {
         new Error(errorMessage),
       );
     }
-    await this.pagerService.makeMonitoredServiceUnHealthy(serviceId);
-    await this.escalationPolicyService.getTargetUserByService(serviceId);
     console.log(monitoredService);
+    if (monitoredService.isHealthy) {
+      await this.pagerService.makeMonitoredServiceUnHealthy(serviceId);
+    }
 
-    console.log(createAlertDto);
+    const targets: PolicyTarget[] =
+      await this.escalationPolicyService.getTargetUserByService(serviceId);
+    console.log(targets);
+    if (targets.length === 0) {
+      const errorMessage = RESPONSE_MESSAGE.NO_TARGET_USERS;
+      return this.utilsService.getHandledErrorModel(
+        RESPONSE_STATUS.FAIL,
+        errorMessage,
+        new Error(errorMessage),
+      );
+    }
+    const users = this.utilsService.flatternNestObjectArray(targets);
+    console.log(users);
+    const usersGroupByAlertType: GroupTypeInterface =
+      this.utilsService.groupByProperty(users, USER_GROUP_BY_ALERT_TYPE_KEY);
+    console.log(usersGroupByAlertType);
+
     return 'This action adds a new alert';
   }
 

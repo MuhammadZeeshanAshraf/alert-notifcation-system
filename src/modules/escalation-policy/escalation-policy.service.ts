@@ -1,14 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { UtilsService } from 'src/common/utils/UtilsService';
+import { FindManyOptions } from 'typeorm';
 import { CreateEscalationPolicyDto } from './dto/create-escalation-policy.dto';
 import { UpdateEscalationPolicyDto } from './dto/update-escalation-policy.dto';
-import { IEscalationPolicyRepository } from './repositories/interfaces/escalation-policy.interface';
-import { FindManyOptions } from 'typeorm';
 import { EscalationPolicy } from './entities/escalation-policy.entity';
+import { PolicyTarget } from './entities/policy-target.entity';
+import { IEscalationPolicyRepository } from './repositories/interfaces/escalation-policy.interface';
+import { ITargetRepository } from './repositories/interfaces/target.interface';
 @Injectable()
 export class EscalationPolicyService {
   constructor(
     @Inject('IEscalationPolicyRepository')
     private readonly escalationPolicyRepository: IEscalationPolicyRepository,
+    @Inject('ITargetRepository')
+    private readonly targetRepository: ITargetRepository,
   ) {}
 
   create(createEscalationPolicyDto: CreateEscalationPolicyDto) {
@@ -31,14 +36,13 @@ export class EscalationPolicyService {
     return `This action removes a #${id} escalationPolicy`;
   }
 
-  async getTargetUserByService(serviceId: number){
+  async getTargetUserByService(serviceId: number): Promise<PolicyTarget[]> {
     const whereOption: FindManyOptions<EscalationPolicy> = {
       where: {
         serviceId: serviceId,
       },
     };
     const policy = await this.escalationPolicyRepository.findOne(whereOption);
-    console.log(policy);
-
+    return await this.targetRepository.getTargetGroupUser(policy.targetGroupId);
   }
 }

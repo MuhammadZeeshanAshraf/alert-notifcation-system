@@ -1,3 +1,4 @@
+import { ALERT_TYPE, LEVEL_TYPE } from "src/common/contants";
 import {
   Column,
   Entity,
@@ -17,12 +18,19 @@ export class PolicyTarget {
 
   @Column("enum", {
     name: "level_type",
-    enum: ["level_1", "level_2", "level_3"],
+    enum: LEVEL_TYPE,
   })
-  levelType: "level_1" | "level_2" | "level_3";
+  levelType: LEVEL_TYPE;
 
-  @Column("enum", { name: "alert_type", enum: ["SMS", "email"] })
-  alertType: "SMS" | "email";
+  @Column("enum", { name: "alert_type", enum: ALERT_TYPE })
+  alertType: ALERT_TYPE;
+
+  @Column('integer', {
+    name: 'target_group_id',
+    default: () => '0',
+    nullable: false,
+  })
+  targetGroupId: number;
 
   @ManyToOne(
     () => PolicyTargetGroup,

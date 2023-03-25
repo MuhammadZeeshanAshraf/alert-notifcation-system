@@ -12,9 +12,15 @@ export const pagerModuleDependeniceRepository = [
     useClass: MonitoredServiceRepository,
   },
 ];
+
+export const pagerModuleDependeniceEntities = [MonitoredService];
+
 @Module({
   imports: [
-    TypeOrmModule.forFeature([MonitoredService], PAGER_DATABASE_CONNECTION),
+    TypeOrmModule.forFeature(
+      [...pagerModuleDependeniceEntities],
+      PAGER_DATABASE_CONNECTION,
+    ),
   ],
   controllers: [PagerController],
   providers: [...pagerModuleDependeniceRepository, PagerService],
