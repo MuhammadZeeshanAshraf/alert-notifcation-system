@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { EscalationPolicyService } from './escalation-policy.service';
 import { CreateEscalationPolicyDto } from './dto/create-escalation-policy.dto';
 import { UpdateEscalationPolicyDto } from './dto/update-escalation-policy.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Escalation Policy')
 @Controller('escalation-policy')
 export class EscalationPolicyController {
   constructor(private readonly escalationPolicyService: EscalationPolicyService) {}

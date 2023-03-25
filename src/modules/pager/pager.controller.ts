@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PagerService } from './pager.service';
 import { CreatePagerDto } from './dto/create-pager.dto';
 import { UpdatePagerDto } from './dto/update-pager.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { IdDto } from 'src/common/dtos/request/id.dto';
 
+@ApiTags('Pager')
 @Controller('pager')
 export class PagerController {
   constructor(private readonly pagerService: PagerService) {}
@@ -18,17 +21,20 @@ export class PagerController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pagerService.findOne(+id);
+  findOne(@Param() idDto: IdDto) {
+    const { id } = idDto;
+    return this.pagerService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePagerDto: UpdatePagerDto) {
-    return this.pagerService.update(+id, updatePagerDto);
+  update(@Param() idDto: IdDto, @Body() updatePagerDto: UpdatePagerDto) {
+    const { id } = idDto;
+    return this.pagerService.update(id, updatePagerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.pagerService.remove(+id);
+  remove(@Param() idDto: IdDto) {
+    const { id } = idDto;
+    return this.pagerService.remove(id);
   }
 }

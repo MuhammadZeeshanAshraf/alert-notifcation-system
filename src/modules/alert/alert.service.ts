@@ -5,6 +5,7 @@ import { UpdateAlertDto } from './dto/update-alert.dto';
 @Injectable()
 export class AlertService {
   create(createAlertDto: CreateAlertDto) {
+    console.log(createAlertDto);
     return 'This action adds a new alert';
   }
 
