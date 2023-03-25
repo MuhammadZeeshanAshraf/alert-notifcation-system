@@ -1,9 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateEscalationPolicyDto } from './dto/create-escalation-policy.dto';
 import { UpdateEscalationPolicyDto } from './dto/update-escalation-policy.dto';
-
+import { IEscalationPolicyRepository } from './repositories/interfaces/escalation-policy.interface';
+import { FindManyOptions } from 'typeorm';
+import { EscalationPolicy } from './entities/escalation-policy.entity';
 @Injectable()
 export class EscalationPolicyService {
+  constructor(
+    @Inject('IEscalationPolicyRepository')
+    private readonly escalationPolicyRepository: IEscalationPolicyRepository,
+  ) {}
+
   create(createEscalationPolicyDto: CreateEscalationPolicyDto) {
     return 'This action adds a new escalationPolicy';
   }
@@ -22,5 +29,16 @@ export class EscalationPolicyService {
 
   remove(id: number) {
     return `This action removes a #${id} escalationPolicy`;
+  }
+
+  async getTargetUserByService(serviceId: number){
+    const whereOption: FindManyOptions<EscalationPolicy> = {
+      where: {
+        serviceId: serviceId,
+      },
+    };
+    const policy = await this.escalationPolicyRepository.findOne(whereOption);
+    console.log(policy);
+
   }
 }

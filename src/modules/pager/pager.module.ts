@@ -6,7 +6,7 @@ import { MonitoredService } from './entities/monitored-service.entity';
 import { PAGER_DATABASE_CONNECTION } from 'src/common/contants';
 import { MonitoredServiceRepository } from './repositories/monitored-service.repository';
 
-export const mduleDependeniceRepository = [
+export const pagerModuleDependeniceRepository = [
   {
     provide: 'IMonitoredServiceRepository',
     useClass: MonitoredServiceRepository,
@@ -17,6 +17,6 @@ export const mduleDependeniceRepository = [
     TypeOrmModule.forFeature([MonitoredService], PAGER_DATABASE_CONNECTION),
   ],
   controllers: [PagerController],
-  providers: [...mduleDependeniceRepository, PagerService],
+  providers: [...pagerModuleDependeniceRepository, PagerService],
 })
 export class PagerModule {}

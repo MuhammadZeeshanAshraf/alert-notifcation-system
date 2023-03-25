@@ -10,3 +10,7 @@ export const NODE_ENV = {
     DEVELOPMENT: 'development',
     PRODUCTION: 'production',
 };
+export const RESPONSE_STATUS = {
+    SUCCESS: true,
+    FAIL: false,
+};

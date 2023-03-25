@@ -1,12 +1,9 @@
+import { PAGER_DATABASE_CONNECTION } from "src/common/contants";
 import {
   Column,
   Entity,
-  Index,
-  OneToMany,
-  PrimaryGeneratedColumn,
+  Index, PrimaryGeneratedColumn
 } from "typeorm";
-import { EscalationPolicy } from "../../escalation-policy/entities/escalation-policy.entity";
-import { PAGER_DATABASE_CONNECTION } from "src/common/contants";
 
 @Index("monitored_service_pkey", ["id"], { unique: true })
 @Entity("monitored_services", { schema: "public" , database: PAGER_DATABASE_CONNECTION } )
@@ -22,10 +19,4 @@ export class MonitoredService {
 
   @Column("boolean", { name: "is_healthy", default: () => "true" })
   isHealthy: boolean;
-
-  // @OneToMany(
-  //   () => EscalationPolicy,
-  //   (escalationPolicies) => escalationPolicies.monitoredServiceIdentifier
-  // )
-  // escalationPolicies: EscalationPolicy[];
 }
