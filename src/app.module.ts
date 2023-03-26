@@ -10,9 +10,11 @@ import { PAGER_DATABASE_CONNECTION } from './common/contants';
 import { UtilsModule } from './common/utils/UtilsModule';
 import { MailModule } from './modules/mail/mail.module';
 import { TwilioModule } from 'nestjs-twilio';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
     }),

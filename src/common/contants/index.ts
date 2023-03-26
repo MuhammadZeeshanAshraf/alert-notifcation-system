@@ -1,6 +1,7 @@
 export const DEFAULT_DATABASE_CONNECTION = 'default';
 export const PAGER_DATABASE_CONNECTION = 'pager';
 export const USER_GROUP_BY_ALERT_TYPE_KEY = 'alertType';
+export const HANDLE_UNACKNOWLEDGED_ALERTS= 'handleUnacknowledgedAlerts'
 
 export enum ALERT_TYPE {
     SMS = 'SMS',

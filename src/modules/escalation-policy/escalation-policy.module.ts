@@ -12,6 +12,7 @@ import { MonitoredService } from './entities/monitored-service.entity';
 import { PolicyTargetGroup } from './entities/policy-target-group.entity';
 import { PolicyTarget } from './entities/policy-target.entity';
 import { AlertAcknowledgment } from './entities/alert-acknowledgment.entity';
+import { AlertAcknowledgmentRepository } from './repositories/alert-acknowledgment.repository';
 
 export const escalationPolicyModuleDependeniceRepository = [
   {
@@ -30,6 +31,10 @@ export const escalationPolicyModuleDependeniceRepository = [
     provide: 'ITargetGroupRepository',
     useClass: TargetGroupRepository,
   },
+  {
+    provide: 'IAlertAcknowledgmentRepository',
+    useClass: AlertAcknowledgmentRepository,
+  },
 ];
 
 export const escalationPolicyModuleDependeniceEntities = [
@@ -38,7 +43,7 @@ export const escalationPolicyModuleDependeniceEntities = [
   User,
   PolicyTargetGroup,
   PolicyTarget,
-  AlertAcknowledgment
+  AlertAcknowledgment,
 ];
 
 @Module({

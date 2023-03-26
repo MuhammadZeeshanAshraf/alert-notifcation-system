@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { EscalationPolicy } from "./escalation-policy.entity";
+import { MonitoredService } from "./monitored-service.entity";
 import { User } from "./user.entity";
 
 @Index("acknowledgment_pkey", ["id"], { unique: true })
@@ -33,7 +34,7 @@ export class AlertAcknowledgment {
   @Column('integer', {
     name: 'acknowledged_by',
     default: () => '0',
-    nullable: false,
+    nullable: true,
   })
   userId: number;
 
@@ -43,6 +44,16 @@ export class AlertAcknowledgment {
     nullable: false,
   })
   alertId: number;
+
+  @Column('integer', {
+    name: 'policy_id',
+    default: () => '0',
+    nullable: false,
+  })
+  policyId: number;
+
+  @Column("character varying", { name: "message", length: 255 , nullable: true })
+  message: string;
 
   @ManyToOne(() => User, (user) => user.alertAcknowledgment)
   @JoinColumn([{ name: "acknowledged_by", referencedColumnName: "id" }])
@@ -54,4 +65,11 @@ export class AlertAcknowledgment {
   )
   @JoinColumn([{ name: "alert_id", referencedColumnName: "id" }])
   alert: EscalationPolicy;
+
+  @ManyToOne(
+    () => MonitoredService,
+    (escalationPolicy) => escalationPolicy.alertAcknowledgment
+  )
+  @JoinColumn([{ name: "policy_id", referencedColumnName: "id" }])
+  monitoredService: MonitoredService;
 }

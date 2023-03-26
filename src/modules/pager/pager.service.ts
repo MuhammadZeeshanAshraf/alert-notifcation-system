@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FindManyOptions, FindOptionsWhere } from 'typeorm';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { CreatePagerDto } from './dto/create-pager.dto';
 import { UpdatePagerDto } from './dto/update-pager.dto';
 import { MonitoredService } from './entities/monitored-service.entity';
-import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { IMonitoredServiceRepository } from './repositories/interfaces/monitored-service.interface';
 
 @Injectable()

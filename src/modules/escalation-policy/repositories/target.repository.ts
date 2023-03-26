@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { LEVEL_TYPE } from 'src/common/contants';
 import { BaseRepository } from 'src/common/database/repositories/base/base.repository';
 import { Repository } from 'typeorm';
 import { PolicyTarget } from '../entities/policy-target.entity';
@@ -17,10 +18,11 @@ export class TargetRepository
     super(repository);
   }
 
-  getTargetGroupUser(groupId: number): Promise<PolicyTarget[]> {
+  getTargetGroupUser(groupId: number, level:string): Promise<PolicyTarget[]> {
     return this.repository.find({
       where: {
         targetGroupId: groupId,
+        levelType: LEVEL_TYPE[level]
       },
       relations: {
         user: true,
