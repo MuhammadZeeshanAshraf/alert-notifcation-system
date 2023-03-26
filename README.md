@@ -297,8 +297,25 @@ To run this project, you will need to add the following environment variables to
 
 `TWILIO_AUTH_TOKEN`
 
-`ADMIN_PHONE_NUMBER` 
+`ADMIN_PHONE_NUMBER`
+
+ 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/MuhammadZeeshanAshraf/alert-notifcation-system/blob/main/resources/escalation_policy_erd.png)
+
+
+## Swagger Documentation
+
+[Documentation](http://localhost:5000/api#)
+
+The Swagger Documentation has been integrated into the project, enabling you to easily run it. To create an alert, utilize the following endpoint:
+
+http://localhost:5000/api#/Alert%20Service/AlertController_create
+
+To acknowledge an alert, use this endpoint:
+
+http://localhost:5000/api#/Alert%20Service/AlertController_update
+
+Additionally, there are other self-explanatory endpoints available for use.
 
