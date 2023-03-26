@@ -25,7 +25,7 @@ export class TwilioSmsService {
     });
   }
 
-  async sendEmailToTargetUsers(alertMessage: string, users: any[]) {
+  async sendSMSToTargetUsers(alertMessage: string, users: any[]) {
     const phoneNumbers = [];
     users.filter((x: User) => {
       if (this.validE164(x.phoneNumber)) {

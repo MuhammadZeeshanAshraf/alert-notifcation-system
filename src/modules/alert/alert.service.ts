@@ -92,7 +92,7 @@ export class AlertService {
           message,
           usersGroupByAlertType?.email,
         ),
-        this.twilioSmsService.sendEmailToTargetUsers(
+        this.twilioSmsService.sendSMSToTargetUsers(
           message,
           usersGroupByAlertType?.SMS,
         ),
@@ -106,7 +106,7 @@ export class AlertService {
       );
       return;
     } else if (usersGroupByAlertType?.SMS.length !== 0) {
-      await this.twilioSmsService.sendEmailToTargetUsers(
+      await this.twilioSmsService.sendSMSToTargetUsers(
         message,
         usersGroupByAlertType?.SMS,
       );
@@ -202,7 +202,7 @@ export class AlertService {
           message,
           usersGroupByAlertType?.email,
         ),
-        this.twilioSmsService.sendEmailToTargetUsers(
+        this.twilioSmsService.sendSMSToTargetUsers(
           message,
           usersGroupByAlertType?.SMS,
         ),
@@ -216,7 +216,7 @@ export class AlertService {
       );
       return;
     } else if (usersGroupByAlertType?.SMS.length !== 0) {
-      await this.twilioSmsService.sendEmailToTargetUsers(
+      await this.twilioSmsService.sendSMSToTargetUsers(
         message,
         usersGroupByAlertType?.SMS,
       );
