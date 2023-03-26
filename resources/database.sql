@@ -1,24 +1,4 @@
-
-# Alert Notification System
-
-Clone the project 
-
-
-
-
-## How to run
-
-First clone the project and install npm packages
-
-```bash
-  git clone https://github.com/MuhammadZeeshanAshraf/alert-notifcation-system.git
-  cd alert-notifcation-system
-```
-
-Once you have established the database by executing the following query or activating the sync flag, you may proceed to add sample data in order to execute flows.
-
-```bash
-  CREATE DATABASE pager;
+CREATE DATABASE pager;
 
   -- public.monitored_services definition
 
@@ -260,45 +240,3 @@ VALUES(2, 'Policy B', 2, 3);
 INSERT INTO public.escalation_policies
 (id, "name", monitored_service_identifier, target_group_id)
 VALUES(3, 'Policy C', 3, 2);
-
-```
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file and env file template also added along with project
-
-
-`NODE_ENV`
-
-`PORT`
-
-`DB_NAME`
-
-`DB_USERNAME`
-
-`DB_PASSWORD`
-
-`DB_HOST`
-
-`DB_PORT`
-
-`DB_SCHEMA`
-
-`DB_CONNECTION_NAME`
-
-`PAGER_DB_NAME`
-
-`PAGER_DB_CONNECTION_NAME`
-
-`SEND_GRID_KEY`
-
-`ADMIN_EMAIL`
-
-`TWILIO_ACCOUNT_SID`
-
-`TWILIO_AUTH_TOKEN`
-
-`ADMIN_PHONE_NUMBER` 
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
