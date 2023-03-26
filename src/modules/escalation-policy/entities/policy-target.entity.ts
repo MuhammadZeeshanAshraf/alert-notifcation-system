@@ -32,6 +32,13 @@ export class PolicyTarget {
   })
   targetGroupId: number;
 
+  @Column('integer', {
+    name: 'user_id',
+    default: () => '0',
+    nullable: false,
+  })
+  userId: number;
+
   @ManyToOne(
     () => PolicyTargetGroup,
     (policyTargetGroup) => policyTargetGroup.policyTargets

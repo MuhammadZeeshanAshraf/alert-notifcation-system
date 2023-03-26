@@ -1,5 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { IdDto } from 'src/common/dtos/request/id.dto';
 import { AlertService } from './alert.service';
 import { CreateAlertDto } from './dto/create-alert.dto';
 import { UpdateAlertDto } from './dto/update-alert.dto';
@@ -9,7 +18,9 @@ import { UpdateAlertDto } from './dto/update-alert.dto';
 export class AlertController {
   constructor(private readonly alertService: AlertService) {}
 
-  @ApiOperation({ description: 'Send alert in case monitored service dysfunction' })
+  @ApiOperation({
+    description: 'Send alert in case monitored service dysfunction',
+  })
   @Post()
   create(@Body() createAlertDto: CreateAlertDto) {
     return this.alertService.create(createAlertDto);
@@ -25,9 +36,9 @@ export class AlertController {
     return this.alertService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAlertDto: UpdateAlertDto) {
-    return this.alertService.update(+id, updateAlertDto);
+  @Patch()
+  update(@Body() updateAlertDto: UpdateAlertDto) {
+    return this.alertService.update(updateAlertDto);
   }
 
   @Delete(':id')

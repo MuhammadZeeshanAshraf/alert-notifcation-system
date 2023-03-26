@@ -232,8 +232,23 @@ export class AlertService {
     return `This action returns a #${id} alert`;
   }
 
-  update(id: number, updateAlertDto: UpdateAlertDto) {
-    return `This action updates a #${id} alert`;
+  async update(updateAlertDto: UpdateAlertDto) {
+    const { acknowledgedBy: userId, serviceId } = updateAlertDto;
+    const target =
+      await this.escalationPolicyService.getTargetUseForAcknowledgment(
+        serviceId,
+        userId,
+      );
+      if(target === null){
+        const errorMessage = RESPONSE_MESSAGE.UNAUTH_TARGET_USERS;
+        return this.utilsService.getHandledErrorModel(
+          RESPONSE_STATUS.FAIL,
+          errorMessage,
+          new Error(errorMessage),
+        );
+      }
+      await this.escalationPolicyService.acknowledgeAlert(serviceId, userId);
+      await this.pagerService.makeMonitoredServiceHealthy(serviceId);
   }
 
   remove(id: number) {

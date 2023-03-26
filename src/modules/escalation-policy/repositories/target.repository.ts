@@ -17,6 +17,17 @@ export class TargetRepository
   ) {
     super(repository);
   }
+  getTargetUseForAcknowledgment(groupId: number, userId: number): Promise<PolicyTarget> {
+    return this.repository.findOne({
+      where: {
+        targetGroupId: groupId,
+        userId: userId
+      },
+      relations: {
+        user: true,
+      },
+    });
+  }
 
   getTargetGroupUser(groupId: number, level:string): Promise<PolicyTarget[]> {
     return this.repository.find({

@@ -21,9 +21,6 @@ export class MonitoredService {
   @Column("text", { name: "description", nullable: true })
   description: string | null;
 
-  @Column("boolean", { name: "is_healthy", default: () => "true" })
-  isHealthy: boolean;
-
   @OneToMany(
     () => EscalationPolicy,
     (escalationPolicies) => escalationPolicies.monitoredServiceIdentifier

@@ -3,4 +3,7 @@ import { PolicyTarget } from '../../entities/policy-target.entity';
 
 export interface ITargetRepository extends BaseRepository<PolicyTarget> {
   getTargetGroupUser(id: number, level:string): Promise<PolicyTarget[]>;
+
+  getTargetUseForAcknowledgment(id: number, userId: number): Promise<PolicyTarget>;
+  
 }

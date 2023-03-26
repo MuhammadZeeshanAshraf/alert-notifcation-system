@@ -17,6 +17,7 @@ export const RESPONSE_MESSAGE = {
     DOES_NOT_EXIST: '%d does not exist!',
     ALREADY_EXIST: '%d already exist!',
     NO_TARGET_USERS: 'No target user found aganist the alert of the monitored service!',
+    UNAUTH_TARGET_USERS: 'The target user is not authorize to acknowledge!',
     INTERNAL_SERVER_ERROR:
         "We're sorry, but our server encountered an unexpected error while processing your request. Please try again later, or contact our support team if the problem persists. We apologize for any inconvenience this may have caused",
 };

@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UtilsService } from 'src/common/utils/UtilsService';
-import { FindManyOptions } from 'typeorm';
+import { FindManyOptions, FindOptionsWhere } from 'typeorm';
 import { CreateEscalationPolicyDto } from './dto/create-escalation-policy.dto';
 import { UpdateEscalationPolicyDto } from './dto/update-escalation-policy.dto';
 import { AlertAcknowledgment } from './entities/alert-acknowledgment.entity';
@@ -9,6 +8,7 @@ import { PolicyTarget } from './entities/policy-target.entity';
 import { IAlertAcknowledgmentRepository } from './repositories/interfaces/alert-acknowledgment.interface';
 import { IEscalationPolicyRepository } from './repositories/interfaces/escalation-policy.interface';
 import { ITargetRepository } from './repositories/interfaces/target.interface';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 @Injectable()
 export class EscalationPolicyService {
   constructor(
@@ -54,17 +54,27 @@ export class EscalationPolicyService {
     return `This action removes a #${id} escalationPolicy`;
   }
 
-  async getTargetUserByService(serviceId: number, level:string): Promise<PolicyTarget[]> {
+  async getTargetUserByService(
+    serviceId: number,
+    level: string,
+  ): Promise<PolicyTarget[]> {
     const whereOption: FindManyOptions<EscalationPolicy> = {
       where: {
         serviceId: serviceId,
       },
     };
     const policy = await this.escalationPolicyRepository.findOne(whereOption);
-    return await this.targetRepository.getTargetGroupUser(policy.targetGroupId, level);
+    return await this.targetRepository.getTargetGroupUser(
+      policy.targetGroupId,
+      level,
+    );
   }
 
-  async createAlertAcknowledgment(alertId: number,serviceId: number, message: string) {
+  async createAlertAcknowledgment(
+    alertId: number,
+    serviceId: number,
+    message: string,
+  ) {
     const alert = new AlertAcknowledgment();
     alert.alertId = alertId;
     alert.policyId = serviceId;
@@ -79,5 +89,36 @@ export class EscalationPolicyService {
       },
     };
     return this.alertAcknowledgmentRepository.find(whereOption);
+  }
+
+  async getTargetUseForAcknowledgment(
+    serviceId: number,
+    userId: number,
+  ): Promise<PolicyTarget> {
+    const whereOption: FindManyOptions<EscalationPolicy> = {
+      where: {
+        serviceId: serviceId,
+      },
+    };
+    const policy = await this.escalationPolicyRepository.findOne(whereOption);
+    return await this.targetRepository.getTargetUseForAcknowledgment(
+      policy.targetGroupId,
+      userId,
+    );
+  }
+
+  async acknowledgeAlert(serviceId: number, userId: number) {
+    const whereOption: FindOptionsWhere<AlertAcknowledgment> = {
+      policyId: serviceId,
+    };
+    const updates: QueryDeepPartialEntity<AlertAcknowledgment> = {
+      userId: userId,
+      isAcknowledged: true,
+      updateAt: new Date(),
+    };
+    return await this.alertAcknowledgmentRepository.update(
+      whereOption,
+      updates,
+    );
   }
 }
